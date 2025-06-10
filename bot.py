@@ -10,6 +10,6 @@ async def on_ready():
 
 @bot.command()
 async def 안녕(ctx):
-    await ctx.send("안녕하세요, 저는 봇입니다! 🤖")
+    await ctx.send("안녕하세요, 저는 발네무시 마크1 입니다! 🤖")
 
 bot.run(os.environ["DISCORD_TOKEN"])
