@@ -9,10 +9,13 @@ intents.message_content = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-# 간단한 명령어 예시
+@bot.event
+async def on_ready():
+    print(f"✅ 봇 로그인 완료: {bot.user}")
+
 @bot.command()
 async def 안녕(ctx):
-    await ctx.send("안녕하세요 저는 바알네무시 마크1 입니다! 👋")
+    await ctx.send("안녕하세요!저는 바알네무시 마크1 입니다. 👋")
 
 # =============== Flask 웹서버 부분 ===============
 app = Flask(__name__)
