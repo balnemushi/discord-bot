@@ -1,27 +1,30 @@
-import os
 import discord
 from discord.ext import commands
+import os
+import threading
+from flask import Flask
 
-bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
+intents = discord.Intents.default()
+intents.message_content = True
 
-@bot.event
-async def on_ready():
-    print(f"✅ 봇이 로그인되었습니다! {bot.user}")
+bot = commands.Bot(command_prefix="!", intents=intents)
 
+# 간단한 명령어 예시
 @bot.command()
 async def 안녕(ctx):
-    await ctx.send("안녕하세요, 저는 발네무시 마크1 입니다! 🤖")
+    await ctx.send("안녕하세요 저는 바알네무시 마크1 입니다! 👋")
 
-bot.run(os.environ["DISCORD_TOKEN"])
-import threading
-import time
-import socket
+# =============== Flask 웹서버 부분 ===============
+app = Flask(__name__)
 
-def keep_alive():
-    s = socket.socket()
-    s.bind(('0.0.0.0', 10000))  # Render가 감지할 가짜 포트
-    s.listen(1)
-    while True:
-        time.sleep(10)
+@app.route('/')
+def index():
+    return "봇이 실행 중입니다!"
 
-threading.Thread(target=keep_alive).start()
+def run_flask():
+    app.run(host='0.0.0.0', port=10000)
+
+# =============== 실행 ===============
+if __name__ == "__main__":
+    threading.Thread(target=run_flask).start()
+    bot.run(os.environ["DISCORD_TOKEN"])
